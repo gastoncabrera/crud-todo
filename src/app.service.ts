@@ -7,6 +7,11 @@ import { Todo, TodoDocument } from './schemas/todo.schema';
 export class AppService {
   constructor(@InjectModel(Todo.name) private catModel: Model<TodoDocument>) {}
 
+  async create(createTodoDto): Promise<Todo> {
+    const createdCat = new this.catModel(createTodoDto);
+    return createdCat.save();
+  }
+
   async findAll(): Promise<Todo[]> {
     return this.catModel.find().exec();
   }
