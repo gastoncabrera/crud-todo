@@ -5,18 +5,31 @@ import { Todo, TodoDocument } from './schemas/todo.schema';
 
 @Injectable()
 export class AppService {
-  constructor(@InjectModel(Todo.name) private catModel: Model<TodoDocument>) {}
+  [x: string]: any;
+  constructor(@InjectModel(Todo.name) private todoModel: Model<TodoDocument>) {}
 
   async create(createTodoDto): Promise<Todo> {
-    const createdCat = new this.catModel(createTodoDto);
+    const createdCat = new this.todoModel(createTodoDto);
     return createdCat.save();
   }
 
   async findAll(): Promise<Todo[]> {
-    return this.catModel.find().exec();
+    return this.todoModel.find().exec();
   }
 
-  // async getHello() {
-  //   return await new this.catModel();
-  // }
+  async update(id: number, updateListDto) {
+    const res = await this.todoModel.findByIdAndUpdate(id, updateListDto);
+    return res;
+  }
+
+  async findOne(id: number) {
+    const list = await this.todoModel.findById(id);
+    return list;
+  }
+
+  async remove(id: number) {
+    const list = await this.todoModel.findById(id);
+    const res = list.remove();
+    return res;
+  }
 }
