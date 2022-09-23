@@ -9,7 +9,10 @@ export class Todo {
   title: string;
 
   @Prop()
-  description: string;
+  activity: string;
+
+  @Prop()
+  completed: boolean;
 }
 
 export const TodoSchema = SchemaFactory.createForClass(Todo);
